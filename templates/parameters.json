@@ -1,0 +1,18 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "workspaces_depresja_projekt_name": {
+            "value": null
+        },
+        "storageaccounts_depresjaprojek8450534617_externalid": {
+            "value": null
+        },
+        "vaults_depresjaprojek0137868893_externalid": {
+            "value": null
+        },
+        "components_depresjaprojek6090752171_externalid": {
+            "value": null
+        }
+    }
+}
