@@ -15,7 +15,7 @@ Projekt miał na celu wykonanie klasyfikatora za pomocą Azure Machine Learning,
 
 ### Schemat procesu ###
 
-1. Stworzenie AML wraz z Grupą zasobów i kontem magazynu
+1. Stworzenie Azure Storage Account, resource group, AML.
 
 2. Dodanie datasetów do Blob Storage z poziomu AML: 
 - treningowych (rys. train_data oraz train_data1) zawierających datasety z poniższych źródeł :
@@ -52,7 +52,7 @@ Zbiory słów które były najbardziej skorelowane z depresją to:
 
 <img src="https://github.com/Jannixen/Azure-Depression-from-tweets/blob/main/images/sentences.png" width=100% height=100%>
 
-Przeprowadzono również analizę czy któraś płeć dominowała wśród znalezionych użytkowników otrzymując informacje, że większość tweetów podejrzanych o depresję pochodzi od kobiet:
+Przeprowadzono również analizę przy użyciu prostych visuali z Power Bi czy któraś płeć dominowała wśród znalezionych użytkowników. Otrzymano informacje, że większość tweetów podejrzanych o depresję pochodzi od kobiet:
 
 <img src="https://github.com/Jannixen/Azure-Depression-from-tweets/blob/main/images/genders.png" width=70% height=70%>
 
