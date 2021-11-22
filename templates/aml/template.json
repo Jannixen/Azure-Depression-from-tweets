@@ -45,45 +45,27 @@
             }
         },
         {
-            "type": "Microsoft.MachineLearningServices/workspaces/computes",
-            "apiVersion": "2021-07-01",
-            "name": "[concat(parameters('workspaces_depresja_projekt_name'), '/computeDepression1')]",
-            "location": "francecentral",
+            "type": "Microsoft.MachineLearningServices/workspaces/data",
+            "apiVersion": "2021-03-01-preview",
+            "name": "[concat(parameters('workspaces_depresja_projekt_name'), '/data_no_labels')]",
             "dependsOn": [
                 "[resourceId('Microsoft.MachineLearningServices/workspaces', parameters('workspaces_depresja_projekt_name'))]"
             ],
             "properties": {
-                "disableLocalAuth": true,
-                "computeType": "ComputeInstance",
-                "computeLocation": "francecentral",
-                "properties": {
-                    "vmSize": "STANDARD_DS1_V2",
-                    "sshSettings": {
-                        "sshPublicAccess": "Disabled"
-                    },
-                    "applicationSharingPolicy": "Shared"
-                }
+                "properties": {},
+                "tags": {}
             }
         },
         {
-            "type": "Microsoft.MachineLearningServices/workspaces/computes",
-            "apiVersion": "2021-07-01",
-            "name": "[concat(parameters('workspaces_depresja_projekt_name'), '/computeDepression1232')]",
-            "location": "francecentral",
+            "type": "Microsoft.MachineLearningServices/workspaces/data",
+            "apiVersion": "2021-03-01-preview",
+            "name": "[concat(parameters('workspaces_depresja_projekt_name'), '/data_no_labels2')]",
             "dependsOn": [
                 "[resourceId('Microsoft.MachineLearningServices/workspaces', parameters('workspaces_depresja_projekt_name'))]"
             ],
             "properties": {
-                "disableLocalAuth": true,
-                "computeType": "ComputeInstance",
-                "computeLocation": "francecentral",
-                "properties": {
-                    "vmSize": "STANDARD_F4S_V2",
-                    "sshSettings": {
-                        "sshPublicAccess": "Disabled"
-                    },
-                    "applicationSharingPolicy": "Shared"
-                }
+                "properties": {},
+                "tags": {}
             }
         },
         {
@@ -511,6 +493,58 @@
         {
             "type": "Microsoft.MachineLearningServices/workspaces/environments/versions",
             "apiVersion": "2021-03-01-preview",
+            "name": "[concat(parameters('workspaces_depresja_projekt_name'), '/AzureML-pytorch-1.8-ubuntu18.04-py37-cuda11-gpu/10')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.MachineLearningServices/workspaces/environments', parameters('workspaces_depresja_projekt_name'), 'AzureML-pytorch-1.8-ubuntu18.04-py37-cuda11-gpu')]",
+                "[resourceId('Microsoft.MachineLearningServices/workspaces', parameters('workspaces_depresja_projekt_name'))]"
+            ],
+            "properties": {
+                "description": "An environment for deep learning with PyTorch containing the Azure ML SDK and additional python packages.",
+                "tags": {
+                    "PyTorch": "1.8",
+                    "GPU": "Cuda11",
+                    "OS": "Ubuntu18.04"
+                },
+                "properties": {},
+                "isAnonymous": false,
+                "docker": {
+                    "platform": {
+                        "operatingSystemType": "Linux"
+                    },
+                    "dockerSpecificationType": "Build",
+                    "dockerfile": "FROM mcr.microsoft.com/azureml/openmpi4.1.0-cuda11.1-cudnn8-ubuntu18.04:20211111.v1\n\nENV AZUREML_CONDA_ENVIRONMENT_PATH /azureml-envs/pytorch-1.8\n\n# Create conda environment\nRUN conda create -p $AZUREML_CONDA_ENVIRONMENT_PATH \\\n    python=3.7 \\\n    pip=20.2.4 \\\n    pytorch=1.8.1 \\\n    torchvision=0.9.1 \\\n    cudatoolkit=11.1.1 \\\n    nvidia-apex=0.1.0 \\\n    -c anaconda -c pytorch -c conda-forge\n\n# Prepend path to AzureML conda environment\nENV PATH $AZUREML_CONDA_ENVIRONMENT_PATH/bin:$PATH\n\n# Install pip dependencies\nRUN HOROVOD_WITH_PYTORCH=1 \\\n    pip install 'matplotlib>=3.3,<3.4' \\\n                'psutil>=5.8,<5.9' \\\n                'tqdm>=4.59,<4.60' \\\n                'pandas>=1.1,<1.2' \\\n                'scipy>=1.5,<1.6' \\\n                'numpy>=1.10,<1.20' \\\n                'ipykernel~=6.0' \\\n                'azureml-core==1.36.0.post2' \\\n                'azureml-defaults==1.36.0' \\\n                'azureml-mlflow==1.36.0' \\\n                'azureml-telemetry==1.36.0' \\\n                'tensorboard==2.4.0' \\\n                'tensorflow-gpu==2.4.1' \\\n                'onnxruntime-gpu>=1.7,<1.8' \\\n                'horovod[pytorch]==0.21.3' \\\n                'future==0.17.1'\n\n# This is needed for mpi to locate libpython\nENV LD_LIBRARY_PATH $AZUREML_CONDA_ENVIRONMENT_PATH/lib:$LD_LIBRARY_PATH\n"
+                }
+            }
+        },
+        {
+            "type": "Microsoft.MachineLearningServices/workspaces/environments/versions",
+            "apiVersion": "2021-03-01-preview",
+            "name": "[concat(parameters('workspaces_depresja_projekt_name'), '/AzureML-pytorch-1.9-ubuntu18.04-py37-cuda11-gpu/10')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.MachineLearningServices/workspaces/environments', parameters('workspaces_depresja_projekt_name'), 'AzureML-pytorch-1.9-ubuntu18.04-py37-cuda11-gpu')]",
+                "[resourceId('Microsoft.MachineLearningServices/workspaces', parameters('workspaces_depresja_projekt_name'))]"
+            ],
+            "properties": {
+                "description": "An environment for deep learning with PyTorch containing the Azure ML SDK and additional python packages.",
+                "tags": {
+                    "PyTorch": "1.9",
+                    "GPU": "Cuda11",
+                    "OS": "Ubuntu18.04"
+                },
+                "properties": {},
+                "isAnonymous": false,
+                "docker": {
+                    "platform": {
+                        "operatingSystemType": "Linux"
+                    },
+                    "dockerSpecificationType": "Build",
+                    "dockerfile": "FROM mcr.microsoft.com/azureml/openmpi4.1.0-cuda11.1-cudnn8-ubuntu18.04:20211111.v1\n\nENV AZUREML_CONDA_ENVIRONMENT_PATH /azureml-envs/pytorch-1.9\n\n# Create conda environment\nRUN conda create -p $AZUREML_CONDA_ENVIRONMENT_PATH \\\n    python=3.7 \\\n    pip=20.2.4 \\\n    pytorch=1.9.0 \\\n    torchvision=0.10.0 \\\n    torchaudio=0.9.0 \\\n    cudatoolkit=11.1.1 \\\n    nvidia-apex=0.1.0 \\\n    -c anaconda -c pytorch -c conda-forge\n\n# Prepend path to AzureML conda environment\nENV PATH $AZUREML_CONDA_ENVIRONMENT_PATH/bin:$PATH\n\n# Install pip dependencies\nRUN HOROVOD_WITH_PYTORCH=1 \\\n    pip install 'matplotlib>=3.3,<3.4' \\\n                'psutil>=5.8,<5.9' \\\n                'tqdm>=4.59,<4.60' \\\n                'pandas>=1.1,<1.2' \\\n                'scipy>=1.5,<1.6' \\\n                'numpy>=1.10,<1.20' \\\n                'ipykernel~=6.0' \\\n                'azureml-core==1.36.0.post2' \\\n                'azureml-defaults==1.36.0' \\\n                'azureml-mlflow==1.36.0' \\\n                'azureml-telemetry==1.36.0' \\\n                'tensorboard==2.4.0' \\\n                'tensorflow-gpu==2.4.1' \\\n                'onnxruntime-gpu>=1.7,<1.8' \\\n                'horovod[pytorch]==0.21.3' \\\n                'future==0.17.1' \\\n                'torch-tb-profiler==0.2.1'\n\n\n# This is needed for mpi to locate libpython\nENV LD_LIBRARY_PATH $AZUREML_CONDA_ENVIRONMENT_PATH/lib:$LD_LIBRARY_PATH\n"
+                }
+            }
+        },
+        {
+            "type": "Microsoft.MachineLearningServices/workspaces/environments/versions",
+            "apiVersion": "2021-03-01-preview",
             "name": "[concat(parameters('workspaces_depresja_projekt_name'), '/AzureML-sklearn-0.24-ubuntu18.04-py37-cpu/10')]",
             "dependsOn": [
                 "[resourceId('Microsoft.MachineLearningServices/workspaces/environments', parameters('workspaces_depresja_projekt_name'), 'AzureML-sklearn-0.24-ubuntu18.04-py37-cpu')]",
@@ -664,6 +698,31 @@
         {
             "type": "Microsoft.MachineLearningServices/workspaces/environments/versions",
             "apiVersion": "2021-03-01-preview",
+            "name": "[concat(parameters('workspaces_depresja_projekt_name'), '/AzureML-sklearn-0.24-ubuntu18.04-py37-cpu/13')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.MachineLearningServices/workspaces/environments', parameters('workspaces_depresja_projekt_name'), 'AzureML-sklearn-0.24-ubuntu18.04-py37-cpu')]",
+                "[resourceId('Microsoft.MachineLearningServices/workspaces', parameters('workspaces_depresja_projekt_name'))]"
+            ],
+            "properties": {
+                "description": "An environment for tasks such as regression, clustering, and classification with Scikit-learn. Contains the Azure ML SDK and additional python packages.",
+                "tags": {
+                    "Scikit-learn": "0.24.1",
+                    "OS": "Ubuntu18.04"
+                },
+                "properties": {},
+                "isAnonymous": false,
+                "docker": {
+                    "platform": {
+                        "operatingSystemType": "Linux"
+                    },
+                    "dockerSpecificationType": "Build",
+                    "dockerfile": "FROM mcr.microsoft.com/azureml/openmpi3.1.2-ubuntu18.04:20211111.v1\n\nENV AZUREML_CONDA_ENVIRONMENT_PATH /azureml-envs/sklearn-0.24.1\n\n# Create conda environment\nRUN conda create -p $AZUREML_CONDA_ENVIRONMENT_PATH \\\n    python=3.7 pip=20.2.4\n\n# Prepend path to AzureML conda environment\nENV PATH $AZUREML_CONDA_ENVIRONMENT_PATH/bin:$PATH\n\n# Install pip dependencies\nRUN pip install 'matplotlib>=3.3,<3.4' \\\n                'psutil>=5.8,<5.9' \\\n                'tqdm>=4.59,<4.60' \\\n                'pandas>=1.1,<1.2' \\\n                'scipy>=1.5,<1.6' \\\n                'numpy>=1.10,<1.20' \\\n                'ipykernel~=6.0' \\\n                'azureml-core==1.36.0.post2' \\\n                'azureml-defaults==1.36.0' \\\n                'azureml-mlflow==1.36.0' \\\n                'azureml-telemetry==1.36.0' \\\n                'scikit-learn==0.24.1'\n\n# This is needed for mpi to locate libpython\nENV LD_LIBRARY_PATH $AZUREML_CONDA_ENVIRONMENT_PATH/lib:$LD_LIBRARY_PATH\n"
+                }
+            }
+        },
+        {
+            "type": "Microsoft.MachineLearningServices/workspaces/environments/versions",
+            "apiVersion": "2021-03-01-preview",
             "name": "[concat(parameters('workspaces_depresja_projekt_name'), '/AzureML-lightgbm-3.2-ubuntu18.04-py37-cpu/14')]",
             "dependsOn": [
                 "[resourceId('Microsoft.MachineLearningServices/workspaces/environments', parameters('workspaces_depresja_projekt_name'), 'AzureML-lightgbm-3.2-ubuntu18.04-py37-cpu')]",
@@ -712,6 +771,34 @@
                     },
                     "dockerSpecificationType": "Build",
                     "dockerfile": "FROM mcr.microsoft.com/azureml/openmpi4.1.0-cuda11.0.3-cudnn8-ubuntu18.04:20211012.v1\n\nENV AZUREML_CONDA_ENVIRONMENT_PATH /azureml-envs/pytorch-1.7\n\n# Create conda environment\nRUN conda create -p $AZUREML_CONDA_ENVIRONMENT_PATH \\\n    python=3.7 \\\n    pip=20.2.4 \\\n    pytorch=1.7.1 \\\n    torchvision=0.8.2 \\\n    torchaudio=0.7.2 \\\n    cudatoolkit=11.0 \\\n    nvidia-apex=0.1.0 \\\n    -c anaconda -c pytorch -c conda-forge\n\n# Prepend path to AzureML conda environment\nENV PATH $AZUREML_CONDA_ENVIRONMENT_PATH/bin:$PATH\n\n# Install pip dependencies\nRUN HOROVOD_WITH_PYTORCH=1 \\\n    pip install 'matplotlib>=3.3,<3.4' \\\n                'psutil>=5.8,<5.9' \\\n                'tqdm>=4.59,<4.60' \\\n                'pandas>=1.1,<1.2' \\\n                'scipy>=1.5,<1.6' \\\n                'numpy>=1.10,<1.20' \\\n                'ipykernel~=6.0' \\\n                'azureml-core==1.35.0' \\\n                'azureml-defaults==1.35.0' \\\n                'azureml-mlflow==1.35.0' \\\n                'azureml-telemetry==1.35.0' \\\n                'tensorboard==2.4.0' \\\n                'tensorflow-gpu==2.4.1' \\\n                'onnxruntime-gpu>=1.7,<1.8' \\\n                'horovod[pytorch]==0.21.3' \\\n                'future==0.17.1'\n\n# This is needed for mpi to locate libpython\nENV LD_LIBRARY_PATH $AZUREML_CONDA_ENVIRONMENT_PATH/lib:$LD_LIBRARY_PATH\n"
+                }
+            }
+        },
+        {
+            "type": "Microsoft.MachineLearningServices/workspaces/environments/versions",
+            "apiVersion": "2021-03-01-preview",
+            "name": "[concat(parameters('workspaces_depresja_projekt_name'), '/AzureML-lightgbm-3.2-ubuntu18.04-py37-cpu/15')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.MachineLearningServices/workspaces/environments', parameters('workspaces_depresja_projekt_name'), 'AzureML-lightgbm-3.2-ubuntu18.04-py37-cpu')]",
+                "[resourceId('Microsoft.MachineLearningServices/workspaces', parameters('workspaces_depresja_projekt_name'))]"
+            ],
+            "properties": {
+                "description": "An environment for machine learning with Scikit-learn, LightGBM, XGBoost, Dask containing AzureML Python SDK and additional packages.",
+                "tags": {
+                    "lightgbm": "3.2",
+                    "xgboost": "1.4",
+                    "sklearn": "0.24",
+                    "dask": "2021.6",
+                    "OS": "Ubuntu18.04"
+                },
+                "properties": {},
+                "isAnonymous": false,
+                "docker": {
+                    "platform": {
+                        "operatingSystemType": "Linux"
+                    },
+                    "dockerSpecificationType": "Build",
+                    "dockerfile": "FROM mcr.microsoft.com/azureml/openmpi3.1.2-ubuntu18.04:20211111.v1\n\nENV AZUREML_CONDA_ENVIRONMENT_PATH /azureml-envs/lightgbm\n\n# Create conda environment\nRUN conda create -p $AZUREML_CONDA_ENVIRONMENT_PATH \\\n    python=3.7 pip=20.2.4\n\n# Prepend path to AzureML conda environment\nENV PATH $AZUREML_CONDA_ENVIRONMENT_PATH/bin:$PATH\n\n# Install pip dependencies\nRUN HOROVOD_WITH_TENSORFLOW=1 \\\n    pip install 'matplotlib>=3.3,<3.4' \\\n                'psutil>=5.8,<5.9' \\\n                'tqdm>=4.59,<4.60' \\\n                'pandas>=1.1,<1.2' \\\n                'numpy>=1.10,<1.20' \\\n                'scipy~=1.5.0' \\\n                'scikit-learn~=0.24.1' \\\n                'xgboost~=1.4.0' \\\n                'lightgbm~=3.2.0' \\\n                'dask~=2021.6.0' \\\n                'distributed~=2021.6.0' \\\n                'dask-ml~=1.9.0' \\\n                'adlfs~=0.7.0' \\\n                'ipykernel~=6.0' \\\n                'azureml-core==1.36.0.post2' \\\n                'azureml-defaults==1.36.0' \\\n                'azureml-mlflow==1.36.0' \\\n                'azureml-telemetry==1.36.0'\n\n# This is needed for mpi to locate libpython\nENV LD_LIBRARY_PATH $AZUREML_CONDA_ENVIRONMENT_PATH/lib:$LD_LIBRARY_PATH"
                 }
             }
         },
@@ -824,6 +911,32 @@
         {
             "type": "Microsoft.MachineLearningServices/workspaces/environments/versions",
             "apiVersion": "2021-03-01-preview",
+            "name": "[concat(parameters('workspaces_depresja_projekt_name'), '/AzureML-pytorch-1.7-ubuntu18.04-py37-cuda11-gpu/17')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.MachineLearningServices/workspaces/environments', parameters('workspaces_depresja_projekt_name'), 'AzureML-pytorch-1.7-ubuntu18.04-py37-cuda11-gpu')]",
+                "[resourceId('Microsoft.MachineLearningServices/workspaces', parameters('workspaces_depresja_projekt_name'))]"
+            ],
+            "properties": {
+                "description": "An environment for deep learning with PyTorch containing the Azure ML SDK and additional python packages.",
+                "tags": {
+                    "PyTorch": "1.7",
+                    "GPU": "Cuda11",
+                    "OS": "Ubuntu18.04"
+                },
+                "properties": {},
+                "isAnonymous": false,
+                "docker": {
+                    "platform": {
+                        "operatingSystemType": "Linux"
+                    },
+                    "dockerSpecificationType": "Build",
+                    "dockerfile": "FROM mcr.microsoft.com/azureml/openmpi4.1.0-cuda11.0.3-cudnn8-ubuntu18.04:20211111.v1\n\nENV AZUREML_CONDA_ENVIRONMENT_PATH /azureml-envs/pytorch-1.7\n\n# Create conda environment\nRUN conda create -p $AZUREML_CONDA_ENVIRONMENT_PATH \\\n    python=3.7 \\\n    pip=20.2.4 \\\n    pytorch=1.7.1 \\\n    torchvision=0.8.2 \\\n    torchaudio=0.7.2 \\\n    cudatoolkit=11.0 \\\n    nvidia-apex=0.1.0 \\\n    -c anaconda -c pytorch -c conda-forge\n\n# Prepend path to AzureML conda environment\nENV PATH $AZUREML_CONDA_ENVIRONMENT_PATH/bin:$PATH\n\n# Install pip dependencies\nRUN HOROVOD_WITH_PYTORCH=1 \\\n    pip install 'matplotlib>=3.3,<3.4' \\\n                'psutil>=5.8,<5.9' \\\n                'tqdm>=4.59,<4.60' \\\n                'pandas>=1.1,<1.2' \\\n                'scipy>=1.5,<1.6' \\\n                'numpy>=1.10,<1.20' \\\n                'ipykernel~=6.0' \\\n                'azureml-core==1.36.0.post2' \\\n                'azureml-defaults==1.36.0' \\\n                'azureml-mlflow==1.36.0' \\\n                'azureml-telemetry==1.36.0' \\\n                'tensorboard==2.4.0' \\\n                'tensorflow-gpu==2.4.1' \\\n                'onnxruntime-gpu>=1.7,<1.8' \\\n                'horovod[pytorch]==0.21.3' \\\n                'future==0.17.1'\n\n# This is needed for mpi to locate libpython\nENV LD_LIBRARY_PATH $AZUREML_CONDA_ENVIRONMENT_PATH/lib:$LD_LIBRARY_PATH\n"
+                }
+            }
+        },
+        {
+            "type": "Microsoft.MachineLearningServices/workspaces/environments/versions",
+            "apiVersion": "2021-03-01-preview",
             "name": "[concat(parameters('workspaces_depresja_projekt_name'), '/AzureML-tensorflow-2.4-ubuntu18.04-py37-cuda11-gpu/17')]",
             "dependsOn": [
                 "[resourceId('Microsoft.MachineLearningServices/workspaces/environments', parameters('workspaces_depresja_projekt_name'), 'AzureML-tensorflow-2.4-ubuntu18.04-py37-cuda11-gpu')]",
@@ -872,6 +985,33 @@
                     },
                     "dockerSpecificationType": "Build",
                     "dockerfile": "FROM mcr.microsoft.com/azureml/mlflow-ubuntu18.04-py37-cpu-inference:20211025.v1"
+                }
+            }
+        },
+        {
+            "type": "Microsoft.MachineLearningServices/workspaces/environments/versions",
+            "apiVersion": "2021-03-01-preview",
+            "name": "[concat(parameters('workspaces_depresja_projekt_name'), '/AzureML-tensorflow-2.4-ubuntu18.04-py37-cuda11-gpu/18')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.MachineLearningServices/workspaces/environments', parameters('workspaces_depresja_projekt_name'), 'AzureML-tensorflow-2.4-ubuntu18.04-py37-cuda11-gpu')]",
+                "[resourceId('Microsoft.MachineLearningServices/workspaces', parameters('workspaces_depresja_projekt_name'))]"
+            ],
+            "properties": {
+                "description": "An environment for deep learning with Tensorflow containing the Azure ML SDK and additional python packages.",
+                "tags": {
+                    "TensorFlow": "2.4",
+                    "Horovod": "2.4.1",
+                    "GPU": "Cuda11",
+                    "OS": "Ubuntu18.04"
+                },
+                "properties": {},
+                "isAnonymous": false,
+                "docker": {
+                    "platform": {
+                        "operatingSystemType": "Linux"
+                    },
+                    "dockerSpecificationType": "Build",
+                    "dockerfile": "FROM mcr.microsoft.com/azureml/openmpi4.1.0-cuda11.0.3-cudnn8-ubuntu18.04:20211111.v1\n\nENV AZUREML_CONDA_ENVIRONMENT_PATH /azureml-envs/tensorflow-2.4\n\n# Create conda environment\nRUN conda create -p $AZUREML_CONDA_ENVIRONMENT_PATH \\\n    python=3.7 pip=20.2.4\n\n# Prepend path to AzureML conda environment\nENV PATH $AZUREML_CONDA_ENVIRONMENT_PATH/bin:$PATH\n\n# Install pip dependencies\nRUN HOROVOD_WITH_TENSORFLOW=1 \\\n    pip install 'matplotlib>=3.3,<3.4' \\\n                'psutil>=5.8,<5.9' \\\n                'tqdm>=4.59,<4.60' \\\n                'pandas>=1.1,<1.2' \\\n                'scipy>=1.5,<1.6' \\\n                'numpy>=1.10,<1.20' \\\n                'ipykernel~=6.0' \\\n                'azureml-core==1.36.0.post2' \\\n                'azureml-defaults==1.36.0' \\\n                'azureml-mlflow==1.36.0' \\\n                'azureml-telemetry==1.36.0' \\\n                'tensorboard==2.4.0' \\\n                'tensorflow-gpu==2.4.1' \\\n                'tensorflow-datasets==4.3.0' \\\n                'onnxruntime-gpu>=1.7,<1.8' \\\n                'horovod[tensorflow-gpu]==0.21.3'\n\n# This is needed for mpi to locate libpython\nENV LD_LIBRARY_PATH $AZUREML_CONDA_ENVIRONMENT_PATH/lib:$LD_LIBRARY_PATH"
                 }
             }
         },
@@ -1762,6 +1902,32 @@
         {
             "type": "Microsoft.MachineLearningServices/workspaces/environments/versions",
             "apiVersion": "2021-03-01-preview",
+            "name": "[concat(parameters('workspaces_depresja_projekt_name'), '/AzureML-pytorch-1.10-ubuntu18.04-py38-cuda11-gpu/3')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.MachineLearningServices/workspaces/environments', parameters('workspaces_depresja_projekt_name'), 'AzureML-pytorch-1.10-ubuntu18.04-py38-cuda11-gpu')]",
+                "[resourceId('Microsoft.MachineLearningServices/workspaces', parameters('workspaces_depresja_projekt_name'))]"
+            ],
+            "properties": {
+                "description": "An environment for deep learning with PyTorch containing the Azure ML SDK and additional python packages.",
+                "tags": {
+                    "PyTorch": "1.10",
+                    "GPU": "Cuda11",
+                    "OS": "Ubuntu18.04"
+                },
+                "properties": {},
+                "isAnonymous": false,
+                "docker": {
+                    "platform": {
+                        "operatingSystemType": "Linux"
+                    },
+                    "dockerSpecificationType": "Build",
+                    "dockerfile": "FROM mcr.microsoft.com/azureml/openmpi4.1.0-cuda11.1-cudnn8-ubuntu18.04:20211111.v1\n\nENV AZUREML_CONDA_ENVIRONMENT_PATH /azureml-envs/pytorch-1.10\n\n# Create conda environment\nRUN conda create -p $AZUREML_CONDA_ENVIRONMENT_PATH \\\n    python=3.8 \\\n    pip=20.2.4 \\\n    pytorch=1.10.0 \\\n    torchvision=0.11.1 \\\n    torchaudio=0.10.0 \\\n    cudatoolkit=11.1.1 \\\n    nvidia-apex=0.1.0 \\\n    gxx_linux-64 \\\n    -c anaconda -c pytorch -c conda-forge\n\n# Prepend path to AzureML conda environment\nENV PATH $AZUREML_CONDA_ENVIRONMENT_PATH/bin:$PATH\n\n# Install pip dependencies\nRUN pip install 'matplotlib>=3.3,<3.4' \\\n                'psutil>=5.8,<5.9' \\\n                'tqdm>=4.59,<4.63' \\\n                'pandas>=1.3,<1.4' \\\n                'scipy>=1.5,<1.8' \\\n                'numpy>=1.10,<1.22' \\\n                'ipykernel~=6.0' \\\n                'azureml-core==1.36.0.post2' \\\n                'azureml-defaults==1.36.0' \\\n                'azureml-mlflow==1.36.0' \\\n                'azureml-telemetry==1.36.0' \\\n                'tensorboard==2.6.0' \\\n                'tensorflow-gpu==2.6.0' \\\n                'onnxruntime-gpu>=1.7,<1.10' \\\n                'horovod==0.23' \\\n                'future==0.18.2' \\\n                'torch-tb-profiler==0.3.1'\n\n\n# This is needed for mpi to locate libpython\nENV LD_LIBRARY_PATH $AZUREML_CONDA_ENVIRONMENT_PATH/lib:$LD_LIBRARY_PATH\n"
+                }
+            }
+        },
+        {
+            "type": "Microsoft.MachineLearningServices/workspaces/environments/versions",
+            "apiVersion": "2021-03-01-preview",
             "name": "[concat(parameters('workspaces_depresja_projekt_name'), '/AzureML-VowpalWabbit-8.8.0/32')]",
             "dependsOn": [
                 "[resourceId('Microsoft.MachineLearningServices/workspaces/environments', parameters('workspaces_depresja_projekt_name'), 'AzureML-VowpalWabbit-8.8.0')]",
@@ -1957,6 +2123,43 @@
                     "dockerSpecificationType": "Build",
                     "dockerfile": "FROM mcr.microsoft.com/azureml/openmpi4.1.0-cuda11.1-cudnn8-ubuntu18.04:20211029.v1\n\nENV AZUREML_CONDA_ENVIRONMENT_PATH /azureml-envs/pytorch-1.9\n\n# Create conda environment\nRUN conda create -p $AZUREML_CONDA_ENVIRONMENT_PATH \\\n    python=3.7 \\\n    pip=20.2.4 \\\n    pytorch=1.9.0 \\\n    torchvision=0.10.0 \\\n    torchaudio=0.9.0 \\\n    cudatoolkit=11.1.1 \\\n    nvidia-apex=0.1.0 \\\n    -c anaconda -c pytorch -c conda-forge\n\n# Prepend path to AzureML conda environment\nENV PATH $AZUREML_CONDA_ENVIRONMENT_PATH/bin:$PATH\n\n# Install pip dependencies\nRUN HOROVOD_WITH_PYTORCH=1 \\\n    pip install 'matplotlib>=3.3,<3.4' \\\n                'psutil>=5.8,<5.9' \\\n                'tqdm>=4.59,<4.60' \\\n                'pandas>=1.1,<1.2' \\\n                'scipy>=1.5,<1.6' \\\n                'numpy>=1.10,<1.20' \\\n                'ipykernel~=6.0' \\\n                'azureml-core==1.36.0.post1' \\\n                'azureml-defaults==1.36.0' \\\n                'azureml-mlflow==1.36.0' \\\n                'azureml-telemetry==1.36.0' \\\n                'tensorboard==2.4.0' \\\n                'tensorflow-gpu==2.4.1' \\\n                'onnxruntime-gpu>=1.7,<1.8' \\\n                'horovod[pytorch]==0.21.3' \\\n                'future==0.17.1' \\\n                'torch-tb-profiler==0.2.1'\n\n\n# This is needed for mpi to locate libpython\nENV LD_LIBRARY_PATH $AZUREML_CONDA_ENVIRONMENT_PATH/lib:$LD_LIBRARY_PATH\n"
                 }
+            }
+        },
+        {
+            "type": "Microsoft.MachineLearningServices/workspaces/data/versions",
+            "apiVersion": "2021-03-01-preview",
+            "name": "[concat(parameters('workspaces_depresja_projekt_name'), '/data_no_labels/1')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.MachineLearningServices/workspaces/data', parameters('workspaces_depresja_projekt_name'), 'data_no_labels')]",
+                "[resourceId('Microsoft.MachineLearningServices/workspaces', parameters('workspaces_depresja_projekt_name'))]",
+                "[resourceId('Microsoft.MachineLearningServices/workspaces/datastores', parameters('workspaces_depresja_projekt_name'), 'workspaceblobstore')]"
+            ],
+            "properties": {
+                "description": "https://www.kaggle.com/crowdflower/twitter-user-gender-classification",
+                "tags": {},
+                "properties": {},
+                "isAnonymous": false,
+                "datastoreId": "[resourceId('Microsoft.MachineLearningServices/workspaces/datastores', parameters('workspaces_depresja_projekt_name'), 'workspaceblobstore')]",
+                "path": "UI/11-16-2021_052207_UTC/gender-classifier-DFE-791531.csv",
+                "datasetType": "Simple"
+            }
+        },
+        {
+            "type": "Microsoft.MachineLearningServices/workspaces/data/versions",
+            "apiVersion": "2021-03-01-preview",
+            "name": "[concat(parameters('workspaces_depresja_projekt_name'), '/data_no_labels2/1')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.MachineLearningServices/workspaces/data', parameters('workspaces_depresja_projekt_name'), 'data_no_labels2')]",
+                "[resourceId('Microsoft.MachineLearningServices/workspaces', parameters('workspaces_depresja_projekt_name'))]",
+                "[resourceId('Microsoft.MachineLearningServices/workspaces/datastores', parameters('workspaces_depresja_projekt_name'), 'workspaceblobstore')]"
+            ],
+            "properties": {
+                "tags": {},
+                "properties": {},
+                "isAnonymous": false,
+                "datastoreId": "[resourceId('Microsoft.MachineLearningServices/workspaces/datastores', parameters('workspaces_depresja_projekt_name'), 'workspaceblobstore')]",
+                "path": "UI/11-16-2021_054143_UTC/gender-classifier-DFE-791531.csv",
+                "datasetType": "Simple"
             }
         },
         {
