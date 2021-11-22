@@ -10,7 +10,7 @@ Monika Kusiak https://github.com/KitsunesWrath
 
 Projekt miał na celu wykonanie klasyfikatora za pomocą Azure Machine Learning, do wykrywania depresji użytkownika na podstawie jego tweetów przy użyciu następujących serwisów Azure:
 
-<img src="https://github.com/Jannixen/Azure-Depression-from-tweets/blob/master/pictures/services.png" width=50% height=50%>
+<img src="https://github.com/Jannixen/Azure-Depression-from-tweets/blob/main/pictures/services.png" width=50% height=50%>
 
 
 ### Schemat procesu ###
@@ -18,7 +18,7 @@ Projekt miał na celu wykonanie klasyfikatora za pomocą Azure Machine Learning,
 1. Stworzenie AML wraz z Grupą zasobów i kontem magazynu
 
 2. Dodanie datasetów do Blob Storage z poziomu AML: 
-- treninogowych (rys. train_data oraz train_data1) zawierających datasety z poniższych źródeł :
+- treningowych (rys. train_data oraz train_data1) zawierających datasety z poniższych źródeł :
   
 https://www.kaggle.com/nikhileswarkomati/suicide-watch
 
@@ -31,7 +31,7 @@ Zestaw danych to zbiór postów z subreddits „SuicideWatch” i „depression�
 
 https://www.kaggle.com/crowdflower/twitter-user-gender-classification
 
-<img src="https://github.com/Jannixen/Azure-Depression-from-tweets/blob/master/pictures/datasets.png" width=50% height=50%>
+<img src="https://github.com/Jannixen/Azure-Depression-from-tweets/blob/main/pictures/datasets.png" width=50% height=50%>
 
 
 3.Stworzenie notebooka i wytrenowanie modelu na datasetach treningowych do klasyfikacji depresji.
@@ -39,22 +39,22 @@ https://www.kaggle.com/crowdflower/twitter-user-gender-classification
 
 4.Wypróbowanie klasyfikatora na nowych tweetach i wyeksportowanie otrzymanych wyników do SQL Database. 
 
-<img src="https://github.com/Jannixen/Azure-Depression-from-tweets/blob/master/pictures/sql.png" width=50% height=50%>
+<img src="https://github.com/Jannixen/Azure-Depression-from-tweets/blob/main/pictures/sql.png" width=50% height=50%>
 
 
 ### Funkcjonalność i efekty ###
 
 Za pomocą użycia stworzonego klasyfikatora dla nowych danych otrzymano listę tweetów osób, mogących potencjalnie cierpieć na depresję. Na 20.000 znaleziono w sumie 34 takie tweety. Po ich przejrzeniu da się zauważyć tweety, które zdecydowanie powinny wzbudzić reakcję np.:
 
-<img src="https://github.com/Jannixen/Azure-Depression-from-tweets/blob/master/pictures/tweets.png" width=50% height=50%>
+<img src="https://github.com/Jannixen/Azure-Depression-from-tweets/blob/main/pictures/tweets.png" width=50% height=50%>
 
 Zbiory słów które wykorzystywane były przez klasyfikator najczęściej do wykrywania depresji to:
 
-<img src="https://github.com/Jannixen/Azure-Depression-from-tweets/blob/master/pictures/sentences.png" width=50% height=50%>
+<img src="https://github.com/Jannixen/Azure-Depression-from-tweets/blob/main/pictures/sentences.png" width=50% height=50%>
 
 Przeprowadzono również analizę czy któraś płeć dominowała wśród znalezionych użytkowników:
 
-<img src="https://github.com/Jannixen/Azure-Depression-from-tweets/blob/master/pictures/genders.png" width=50% height=50%>
+<img src="https://github.com/Jannixen/Azure-Depression-from-tweets/blob/main/pictures/genders.png" width=50% height=50%>
 
 
 
