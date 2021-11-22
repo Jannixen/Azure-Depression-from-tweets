@@ -39,7 +39,7 @@ https://www.kaggle.com/crowdflower/twitter-user-gender-classification
 
 4.Wypróbowanie klasyfikatora na nowych tweetach i wyeksportowanie otrzymanych wyników do SQL Database. 
 
-<img src="https://github.com/Jannixen/Azure-Depression-from-tweets/blob/main/images/sql2.png" width=40% height=40%>
+<img src="https://github.com/Jannixen/Azure-Depression-from-tweets/blob/main/images/sql2.png" width=100% height=100%>
 
 
 ### Funkcjonalność i efekty ###
